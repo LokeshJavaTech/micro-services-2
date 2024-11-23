@@ -14,3 +14,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to eazybytes bank."
+  contactDetails:
+    name: "Lokesh Mittal"
+    email: "lokesh.mittal@email.com"
+  onCallSupport:
+    - (111) 123-5678
+    - (111) 123-5679
