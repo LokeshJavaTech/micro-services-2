@@ -10,11 +10,13 @@
 	</parent>
 	<groupId>com.eazybytes</groupId>
 	<artifactId>loans</artifactId>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>loans</name>
 	<description>Microservice for Loans</description>
 	<properties>
 		<java.version>21</java.version>
+		<my.docker.registry>lokeshjavatech</my.docker.registry>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -68,6 +70,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<name>${my.docker.registry}/${project.artifactId}:v1</name>
+					</image>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
