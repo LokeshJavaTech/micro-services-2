@@ -1,0 +1,11 @@
+build:
+  version: "loans_qa_1.0"
+
+loans:
+  message: "Welcome to eazybytes bank Loans QA microservice API."
+  contactDetails:
+    name: "Loans QA Name"
+    email: "loans_qa@email.com"
+  onCallSupport:
+    - (222) 111-1111
+    - (222) 111-1112

@@ -1,0 +1,11 @@
+build:
+  version: "loans_prod_1.0"
+
+loans:
+  message: "Welcome to eazybytes bank Loans PROD microservice API."
+  contactDetails:
+    name: "Loans PROD Name"
+    email: "loans_prod@email.com"
+  onCallSupport:
+    - (333) 111-1111
+    - (333) 111-1112

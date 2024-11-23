@@ -1,6 +1,9 @@
 server:
   port: 8080
+
 spring:
+  application:
+    name: accounts
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -14,15 +17,19 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    import: "optional:configserver:http://localhost:8071/"
 
-build:
-  version: "1.0"
-
-accounts:
-  message: "Welcome to eazybytes bank."
-  contactDetails:
-    name: "Lokesh Mittal"
-    email: "accounts@email.com"
-  onCallSupport:
-    - (111) 123-5678
-    - (111) 123-5679
+# Moved below properties to spring cloud config server
+#
+# build:
+#   version: "1.0"
+#
+# accounts:
+#   message: "Welcome to eazybytes bank."
+#   contactDetails:
+#     name: "Lokesh Mittal"
+#     email: "accounts@email.com"
+#   onCallSupport:
+#     - (111) 123-5678
+#     - (111) 123-5679

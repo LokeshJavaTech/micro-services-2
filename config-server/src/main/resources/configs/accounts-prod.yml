@@ -1,0 +1,11 @@
+build:
+  version: "accounts_prod_1.0"
+
+accounts:
+  message: "Welcome to eazybytes bank Accounts PROD microservice API."
+  contactDetails:
+    name: "Accounts PROD Name"
+    email: "accounts_prod@email.com"
+  onCallSupport:
+    - (333) 111-1111
+    - (333) 111-1112

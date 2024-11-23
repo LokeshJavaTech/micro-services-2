@@ -1,0 +1,11 @@
+build:
+  version: "accounts_default_1.0"
+
+accounts:
+  message: "Welcome to eazybytes bank Accounts Default microservice API."
+  contactDetails:
+    name: "Accounts Default Name"
+    email: "accounts_default@email.com"
+  onCallSupport:
+    - (111) 111-1111
+    - (111) 111-1112

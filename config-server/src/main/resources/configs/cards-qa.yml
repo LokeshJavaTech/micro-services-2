@@ -1,0 +1,11 @@
+build:
+  version: "cards_qa_1.0"
+
+cards:
+  message: "Welcome to eazybytes bank Cards QA microservice API."
+  contactDetails:
+    name: "Cards QA Name"
+    email: "cards_qa@email.com"
+  onCallSupport:
+    - (222) 111-1111
+    - (222) 111-1112

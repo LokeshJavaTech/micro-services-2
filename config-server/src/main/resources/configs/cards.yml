@@ -1,0 +1,11 @@
+build:
+  version: "cards_default_1.0"
+
+cards:
+  message: "Welcome to eazybytes bank Cards Default microservice API."
+  contactDetails:
+    name: "Cards Default Name"
+    email: "cards_default@email.com"
+  onCallSupport:
+    - (111) 111-1111
+    - (111) 111-1112

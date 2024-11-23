@@ -1,0 +1,11 @@
+build:
+  version: "cards_prod_1.0"
+
+cards:
+  message: "Welcome to eazybytes bank Cards PROD microservice API."
+  contactDetails:
+    name: "Cards PROD Name"
+    email: "cards_prod@email.com"
+  onCallSupport:
+    - (333) 111-1111
+    - (333) 111-1112

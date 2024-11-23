@@ -1,0 +1,11 @@
+build:
+  version: "accounts_qa_1.0"
+
+accounts:
+  message: "Welcome to eazybytes bank Accounts QA microservice API."
+  contactDetails:
+    name: "Accounts QA Name"
+    email: "accounts_qa@email.com"
+  onCallSupport:
+    - (222) 111-1111
+    - (222) 111-1112
