@@ -22,7 +22,7 @@ accounts:
   message: "Welcome to eazybytes bank."
   contactDetails:
     name: "Lokesh Mittal"
-    email: "lokesh.mittal@email.com"
+    email: "accounts@email.com"
   onCallSupport:
     - (111) 123-5678
     - (111) 123-5679
