@@ -33,3 +33,9 @@ spring:
 #   onCallSupport:
 #     - (111) 123-5678
 #     - (111) 123-5679
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "refresh"
