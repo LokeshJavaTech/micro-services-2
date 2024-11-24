@@ -5,11 +5,16 @@ spring:
   application:
     name: config-server
   profiles:
-    active: native
+    #active: native
+    active: git
   cloud:
     config:
       server:
-        native:
-          searchLocations: "classpath:/configs"
-
-
+        #native:
+        #  searchLocations: "classpath:/configs"
+        git:
+          uri: "https://github.com/LokeshJavaTech/config-server-git-repo.git"
+          default-label: master
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
