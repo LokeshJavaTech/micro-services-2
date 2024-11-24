@@ -18,3 +18,6 @@ spring:
           timeout: 5
           clone-on-start: true
           force-pull: true
+
+encrypt:
+  key: "LOKESH_MITTAL_COMPLEX_KEY_FOR_ENCRYPTION_DECRYPTION_OF_CONFIG_VALUES"
