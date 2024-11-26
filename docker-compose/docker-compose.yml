@@ -12,8 +12,9 @@ services:
       timeout: 5s
       interval: 10s
       retries: 10
-    networks:
-      - eazybytes_network
+    extends:
+      file: docker-compose-common-config.yml
+      service: network_service
 
   config_server_service:
     image: lokeshjavatech/config-server:v1
@@ -23,20 +24,15 @@ services:
     depends_on:
       rabbit_mq_service:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       start_period: 10s
       timeout: 5s
       interval: 10s
       retries: 10
-    environment:
-      SPRING_RABBITMQ_HOST: rabbit_mq_service
-    networks:
-      - eazybytes_network
+    extends:
+      file: docker-compose-common-config.yml
+      service: network_deploy_service
 
   accounts_service:
     image: lokeshjavatech/accounts:v1
@@ -46,17 +42,11 @@ services:
     depends_on:
       config_server_service:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
     environment:
       SPRING_APPLICATION_NAME: "accounts"
-      SPRING_PROFILES_ACTIVE: "qa"
-      SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
-      SPRING_RABBITMQ_HOST: rabbit_mq_service
-    networks:
-      - eazybytes_network
+    extends:
+      file: docker-compose-common-config.yml
+      service: network_deploy_env_service
 
   loans_service:
     image: lokeshjavatech/loans:v1
@@ -66,17 +56,11 @@ services:
     depends_on:
       config_server_service:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
     environment:
       SPRING_APPLICATION_NAME: "loans"
-      SPRING_PROFILES_ACTIVE: "qa"
-      SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
-      SPRING_RABBITMQ_HOST: rabbit_mq_service
-    networks:
-      - eazybytes_network
+    extends:
+      file: docker-compose-common-config.yml
+      service: network_deploy_env_service
 
   cards_service:
     image: lokeshjavatech/cards:v1
@@ -86,17 +70,11 @@ services:
     depends_on:
       config_server_service:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
     environment:
       SPRING_APPLICATION_NAME: "cards"
-      SPRING_PROFILES_ACTIVE: "qa"
-      SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
-      SPRING_RABBITMQ_HOST: rabbit_mq_service
-    networks:
-      - eazybytes_network
+    extends:
+      file: docker-compose-common-config.yml
+      service: network_deploy_env_service
 
 networks:
   eazybytes_network:
