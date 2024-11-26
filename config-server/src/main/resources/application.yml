@@ -24,5 +24,20 @@ spring:
     username: "guest"
     password: "guest"
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+
 encrypt:
   key: "LOKESH_MITTAL_COMPLEX_KEY_FOR_ENCRYPTION_DECRYPTION_OF_CONFIG_VALUES"
