@@ -11,9 +11,12 @@ services:
       timeout: 5s
       interval: 10s
       retries: 10
-    extends:
-      file: docker-compose-common-config.yml
-      service: network_deploy_service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybytes_network
 
   accounts_service:
     image: lokeshjavatech/accounts:v1
@@ -25,9 +28,14 @@ services:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"
-    extends:
-      file: docker-compose-common-config.yml
-      service: network_deploy_env_service
+      SPRING_PROFILES_ACTIVE: "qa"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybytes_network
 
   loans_service:
     image: lokeshjavatech/loans:v1
@@ -39,9 +47,14 @@ services:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "loans"
-    extends:
-      file: docker-compose-common-config.yml
-      service: network_deploy_env_service
+      SPRING_PROFILES_ACTIVE: "qa"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybytes_network
 
   cards_service:
     image: lokeshjavatech/cards:v1
@@ -53,9 +66,14 @@ services:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "cards"
-    extends:
-      file: docker-compose-common-config.yml
-      service: network_deploy_env_service
+      SPRING_PROFILES_ACTIVE: "qa"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybytes_network
 
 networks:
   eazybytes_network:
