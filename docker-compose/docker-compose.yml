@@ -1,29 +1,10 @@
 services:
 
-  rabbit_mq_service:
-    image: rabbitmq:4.0-management
-    hostname: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      start_period: 5s
-      timeout: 5s
-      interval: 10s
-      retries: 10
-    extends:
-      file: docker-compose-common-config.yml
-      service: network_service
-
   config_server_service:
     image: lokeshjavatech/config-server:v1
     container_name: config-server-container
     ports:
       - 8071:8071
-    depends_on:
-      rabbit_mq_service:
-        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       start_period: 10s

@@ -11,8 +11,6 @@ services:
       resources:
         limits:
           memory: 700m
-    environment:
-      SPRING_RABBITMQ_HOST: rabbit_mq_service
 
   network_deploy_env_service:
     extends:
