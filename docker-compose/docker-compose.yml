@@ -18,6 +18,24 @@ services:
     networks:
       - eazybytes_network
 
+
+  accounts_db_service:
+    image: mysql:8.3.0
+    container_name: accounts-db-container
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      start_period: 10s
+      timeout: 5s
+      interval: 10s
+      retries: 10
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_pwd
+      MYSQL_DATABASE: accounts_db
+    networks:
+      - eazybytes_network
+
   accounts_service:
     image: lokeshjavatech/accounts:v1
     container_name: accounts-container
@@ -26,14 +44,37 @@ services:
     depends_on:
       config_server_service:
         condition: service_healthy
+      accounts_db_service:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"
       SPRING_PROFILES_ACTIVE: "qa"
       SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://accounts_db_service:3306/accounts_db"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "mysql_pwd"
     deploy:
       resources:
         limits:
           memory: 700m
+    networks:
+      - eazybytes_network
+
+
+  loans_db_service:
+    image: mysql:8.3.0
+    container_name: loans-db-container
+    ports:
+      - 3307:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      start_period: 10s
+      timeout: 5s
+      interval: 10s
+      retries: 10
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_pwd
+      MYSQL_DATABASE: loans_db
     networks:
       - eazybytes_network
 
@@ -45,14 +86,37 @@ services:
     depends_on:
       config_server_service:
         condition: service_healthy
+      loans_db_service:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "loans"
       SPRING_PROFILES_ACTIVE: "qa"
       SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://loans_db_service:3306/loans_db"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "mysql_pwd"
     deploy:
       resources:
         limits:
           memory: 700m
+    networks:
+      - eazybytes_network
+
+
+  cards_db_service:
+    image: mysql:8.3.0
+    container_name: cards-db-container
+    ports:
+      - 3308:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      start_period: 10s
+      timeout: 5s
+      interval: 10s
+      retries: 10
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_pwd
+      MYSQL_DATABASE: cards_db
     networks:
       - eazybytes_network
 
@@ -64,10 +128,15 @@ services:
     depends_on:
       config_server_service:
         condition: service_healthy
+      cards_db_service:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "cards"
       SPRING_PROFILES_ACTIVE: "qa"
       SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://cards_db_service:3306/cards_db"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "mysql_pwd"
     deploy:
       resources:
         limits:
