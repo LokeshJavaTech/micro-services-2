@@ -49,6 +49,6 @@ eureka:
 
 info:
   app:
-    name: "loans"
+    name: "loans_info_name"
     description: "Loans Application"
     version: "1.0.0"

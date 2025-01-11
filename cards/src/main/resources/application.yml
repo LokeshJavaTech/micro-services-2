@@ -49,6 +49,6 @@ eureka:
 
 info:
   app:
-    name: "cards"
+    name: "cards_info_name"
     description: "Cards Application"
     version: "1.0.0"

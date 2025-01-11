@@ -49,6 +49,6 @@ eureka:
 
 info:
   app:
-    name: "accounts"
+    name: "accounts_info_name"
     description: "Accounts Application"
     version: "1.0.0"
