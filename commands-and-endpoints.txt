@@ -1,0 +1,46 @@
+################################### Commands to run from micro-services-2 directory ####################################
+
+mvn -f config-server/pom.xml compile jib:dockerBuild
+mvn -f accounts/pom.xml compile jib:dockerBuild
+mvn -f loans/pom.xml compile jib:dockerBuild
+mvn -f cards/pom.xml compile jib:dockerBuild
+docker compose -f docker-compose/docker-compose.yml up -d
+docker compose -f docker-compose/docker-compose.yml down
+
+====================================================== END POINTS ======================================================
+Microservices.postman_collection.json
+
+---------- CONFIG SERVER ----------
+GET http://localhost:8071/accounts/default
+GET http://localhost:8071/accounts/qa
+GET http://localhost:8071/accounts/prod
+
+GET http://localhost:8071/loans/default
+GET http://localhost:8071/loans/qa
+GET http://localhost:8071/loans/prod
+
+GET http://localhost:8071/cards/default
+GET http://localhost:8071/cards/qa
+GET http://localhost:8071/cards/prod
+
+GET http://localhost:8071/eureka-server/default
+
+---------- Accounts MS ----------
+http://localhost:8080/
+GET http://localhost:8080/h2-console
+POST http://localhost:8080/actuator/shutdown
+
+---------- Loans MS ----------
+http://localhost:8090/
+GET http://localhost:8090/h2-console
+POST http://localhost:8090/actuator/shutdown
+
+---------- Cards MS ----------
+http://localhost:9000/
+GET http://localhost:9000/h2-console
+POST http://localhost:9000/actuator/shutdown
+
+---------- Eureka Server - Client Side Service Discovery ----------
+GET http://localhost:8070/
+GET http://localhost:8070/eureka/apps
+GET http://localhost:8070/eureka/apps/accounts
