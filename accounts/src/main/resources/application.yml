@@ -5,30 +5,22 @@ spring:
   application:
     name: accounts
   datasource:
-    url: jdbc:mysql://localhost:3306/accounts_db
-    username: root
-    password: mysql_pwd
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
     show-sql: true
-  sql:
-    init:
-      mode: always
   config:
     import: "optional:configserver:http://localhost:8071/"
-
-# Moved below properties to spring cloud config server
-#
-# build:
-#   version: "1.0"
-#
-# accounts:
-#   message: "Welcome to eazybytes bank."
-#   contactDetails:
-#     name: "Lokesh Mittal"
-#     email: "accounts@email.com"
-#   onCallSupport:
-#     - (111) 123-5678
-#     - (111) 123-5679
 
 management:
   endpoints:

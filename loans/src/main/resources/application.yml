@@ -5,30 +5,22 @@ spring:
   application:
     name: loans
   datasource:
-    url: jdbc:mysql://localhost:3307/loans_db
-    username: root
-    password: mysql_pwd
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
     show-sql: true
-  sql:
-    init:
-      mode: always
   config:
     import: "optional:configserver:http://localhost:8071/"
-
-# Moved below properties to spring cloud config server
-#
-# build:
-#   version: "3.0"
-#
-# loans:
-#   message: "Welcome to EazyBank loans related local APIs "
-#   contactDetails:
-#     name: "Amaal Grega - Developer"
-#     email: "loans@eazybank.com"
-#   onCallSupport:
-#     - (452) 456-2176
-#     - (546) 764-8934
 
 management:
   endpoints:
