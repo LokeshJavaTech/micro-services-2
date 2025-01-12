@@ -5,6 +5,7 @@ mvn -f accounts/pom.xml compile jib:dockerBuild
 mvn -f loans/pom.xml compile jib:dockerBuild
 mvn -f cards/pom.xml compile jib:dockerBuild
 mvn -f eureka-server/pom.xml compile jib:dockerBuild
+mvn -f gateway-server/pom.xml compile jib:dockerBuild
 
 docker compose -f docker-compose/docker-compose.yml up -d
 docker compose -f docker-compose/docker-compose.yml down
@@ -14,6 +15,7 @@ docker push docker.io/lokeshjavatech/accounts:v1
 docker push docker.io/lokeshjavatech/loans:v1
 docker push docker.io/lokeshjavatech/cards:v1
 docker push docker.io/lokeshjavatech/eureka-server:v1
+docker push docker.io/lokeshjavatech/gateway-server:v1
 
 ====================================================== END POINTS ======================================================
 Microservices.postman_collection.json
@@ -52,3 +54,10 @@ POST http://localhost:9000/actuator/shutdown
 GET http://localhost:8070/
 GET http://localhost:8070/eureka/apps
 GET http://localhost:8070/eureka/apps/accounts
+
+---------- Gateway Server - Spring Cloud Gateway - API Gateway ----------
+GET http://localhost:8072/actuator
+GET http://localhost:8072/actuator/gateway
+GET http://localhost:8072/actuator/gateway/routes
+GET http://localhost:8072/accounts/api/fetch?mobileNumber=1234567890
+
