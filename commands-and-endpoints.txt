@@ -4,8 +4,16 @@ mvn -f config-server/pom.xml compile jib:dockerBuild
 mvn -f accounts/pom.xml compile jib:dockerBuild
 mvn -f loans/pom.xml compile jib:dockerBuild
 mvn -f cards/pom.xml compile jib:dockerBuild
+mvn -f eureka-server/pom.xml compile jib:dockerBuild
+
 docker compose -f docker-compose/docker-compose.yml up -d
 docker compose -f docker-compose/docker-compose.yml down
+
+docker push docker.io/lokeshjavatech/config-server:v1
+docker push docker.io/lokeshjavatech/accounts:v1
+docker push docker.io/lokeshjavatech/loans:v1
+docker push docker.io/lokeshjavatech/cards:v1
+docker push docker.io/lokeshjavatech/eureka-server:v1
 
 ====================================================== END POINTS ======================================================
 Microservices.postman_collection.json
