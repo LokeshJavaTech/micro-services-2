@@ -59,5 +59,13 @@ GET http://localhost:8070/eureka/apps/accounts
 GET http://localhost:8072/actuator
 GET http://localhost:8072/actuator/gateway
 GET http://localhost:8072/actuator/gateway/routes
+
 GET http://localhost:8072/accounts/api/fetch?mobileNumber=1234567890
+GET http://localhost:8072/loans/api/fetch?mobileNumber=1234567890
+GET http://localhost:8072/cards/api/fetch?mobileNumber=1234567890
+    ->
+Custom Routes (Request should come with /eazybank)
+GET http://localhost:8072/eazybank/accounts/api/fetch?mobileNumber=1234567890
+GET http://localhost:8072/eazybank/loans/api/fetch?mobileNumber=1234567890
+GET http://localhost:8072/eazybank/cards/api/fetch?mobileNumber=1234567890
 
