@@ -55,6 +55,12 @@ services:
         condition: service_healthy
       eureka_server_service:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      start_period: 10s
+      timeout: 5s
+      interval: 10s
+      retries: 10
     environment:
       SPRING_APPLICATION_NAME: "accounts"
       SPRING_PROFILES_ACTIVE: "qa"
@@ -78,6 +84,12 @@ services:
         condition: service_healthy
       eureka_server_service:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
+      start_period: 10s
+      timeout: 5s
+      interval: 10s
+      retries: 10
     environment:
       SPRING_APPLICATION_NAME: "loans"
       SPRING_PROFILES_ACTIVE: "qa"
@@ -101,6 +113,12 @@ services:
         condition: service_healthy
       eureka_server_service:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1"
+      start_period: 10s
+      timeout: 5s
+      interval: 10s
+      retries: 10
     environment:
       SPRING_APPLICATION_NAME: "cards"
       SPRING_PROFILES_ACTIVE: "qa"
@@ -112,6 +130,32 @@ services:
           memory: 700m
     networks:
       - eazybytes_network
+
+
+  gateway_server_service:
+    image: lokeshjavatech/gateway-server:v1
+    container_name: gateway-server-container
+    ports:
+      - 8072:8072
+    depends_on:
+      accounts_service:
+        condition: service_healthy
+      loans_service:
+        condition: service_healthy
+      cards_service:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gateway-server"
+      SPRING_PROFILES_ACTIVE: "qa"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server-container:8070/eureka/"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybytes_network
+
 
 networks:
   eazybytes_network:
