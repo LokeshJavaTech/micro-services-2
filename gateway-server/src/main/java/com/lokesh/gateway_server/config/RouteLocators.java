@@ -17,6 +17,7 @@ public class RouteLocators {
                                         .rewritePath("/eazybank/accounts/(?<segment>.*)", "/${segment}")
                                         .circuitBreaker(config -> config
                                                                         .setName("accountsCircuitBreaker")
+                                                                        .setFallbackUri("forward:/contactSupport")
                                         )
                         )
                         .uri("lb://ACCOUNTS"))
