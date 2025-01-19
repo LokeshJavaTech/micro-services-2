@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * - Send request to that particular Card MS and get response
  * */
 
-@FeignClient("cards")
+@FeignClient(name = "cards", fallback = CardsFallback.class)
 public interface CardsFeignClient {
 
     @GetMapping(value = "/api/fetch", consumes = "application/json")

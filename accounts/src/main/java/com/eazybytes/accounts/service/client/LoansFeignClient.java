@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 * - Send request to that particular Loan MS and get response
 * */
 
-@FeignClient(value="loans")
+@FeignClient(name="loans", fallback = LoansFallback.class)
 public interface LoansFeignClient {
 
     @GetMapping(value = "/api/fetch", consumes = "application/json")
