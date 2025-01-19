@@ -13,7 +13,12 @@ public class RouteLocators {
         return routeLocatorBuilder.routes()
                 .route(p -> p
                         .path("/eazybank/accounts/**")
-                        .filters(f -> f.rewritePath("/eazybank/accounts/(?<segment>.*)", "/${segment}"))
+                        .filters(f -> f
+                                        .rewritePath("/eazybank/accounts/(?<segment>.*)", "/${segment}")
+                                        .circuitBreaker(config -> config
+                                                                        .setName("accountsCircuitBreaker")
+                                        )
+                        )
                         .uri("lb://ACCOUNTS"))
                 .route(p -> p
                         .path("/eazybank/loans/**")

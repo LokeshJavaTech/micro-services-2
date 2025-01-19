@@ -35,27 +35,27 @@ GET http://localhost:8071/cards/prod
 
 GET http://localhost:8071/eureka-server/default
 
----------- Accounts MS ----------
+-------------------- Accounts MS --------------------
 http://localhost:8080/
 GET http://localhost:8080/h2-console
 POST http://localhost:8080/actuator/shutdown
 
----------- Loans MS ----------
+-------------------- Loans MS --------------------
 http://localhost:8090/
 GET http://localhost:8090/h2-console
 POST http://localhost:8090/actuator/shutdown
 
----------- Cards MS ----------
+-------------------- Cards MS --------------------
 http://localhost:9000/
 GET http://localhost:9000/h2-console
 POST http://localhost:9000/actuator/shutdown
 
----------- Eureka Server - Client Side Service Discovery ----------
+-------------------- Eureka Server - Client Side Service Discovery --------------------
 GET http://localhost:8070/
 GET http://localhost:8070/eureka/apps
 GET http://localhost:8070/eureka/apps/accounts
 
----------- Gateway Server - Spring Cloud Gateway - API Gateway ----------
+-------------------- Gateway Server - Spring Cloud Gateway - API Gateway --------------------
 GET http://localhost:8072/actuator
 GET http://localhost:8072/actuator/gateway
 GET http://localhost:8072/actuator/gateway/routes
@@ -64,8 +64,13 @@ GET http://localhost:8072/accounts/api/fetch?mobileNumber=1234567890
 GET http://localhost:8072/loans/api/fetch?mobileNumber=1234567890
 GET http://localhost:8072/cards/api/fetch?mobileNumber=1234567890
     ->
-Custom Routes (Request should come with /eazybank)
+# Custom Routes (Request should come with /eazybank)
 GET http://localhost:8072/eazybank/accounts/api/fetch?mobileNumber=1234567890
 GET http://localhost:8072/eazybank/loans/api/fetch?mobileNumber=1234567890
 GET http://localhost:8072/eazybank/cards/api/fetch?mobileNumber=1234567890
 
+# Circuit breakers:
+GET http://localhost:8072/actuator/circuitbreakers
+GET http://localhost:8072/actuator/circuitbreakerevents?name=accountsCircuitBreaker
+
+----------------------------------------------------------------------------------------------------
