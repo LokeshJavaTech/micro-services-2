@@ -6,6 +6,7 @@ import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ErrorResponseDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -180,9 +181,14 @@ public class AccountsController {
     }
 
     @GetMapping("/build-info")
+    @Retry(name = "getBuildVersionRetryName", fallbackMethod = "getBuildVersionRetryFallback")
     public ResponseEntity<String> getBuildVersion() {
         return ResponseEntity
                 .ok(buildVersion);
+    }
+
+    public ResponseEntity<String> getBuildVersionRetryFallback(Throwable throwable) {
+        return ResponseEntity.ok("v100");
     }
 
     @GetMapping("/java-version")
