@@ -1,5 +1,8 @@
 package com.lokesh.gateway_server.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +13,12 @@ import java.time.Duration;
 
 @Configuration
 public class RouteLocators {
+
+    @Autowired
+    private RedisRateLimiter redisRateLimiter;
+
+    @Autowired
+    private KeyResolver keyResolver;
 
     @Bean
     public RouteLocator eazyBankRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
@@ -39,6 +48,10 @@ public class RouteLocators {
                         .path("/eazybank/cards/**")
                         .filters(f -> f
                                         .rewritePath("/eazybank/cards/(?<segment>.*)", "/${segment}")
+                                        .requestRateLimiter(config -> config
+                                                                            .setKeyResolver(keyResolver)
+                                                                            .setRateLimiter(redisRateLimiter)
+                                        )
                         )
                         .uri("lb://CARDS"))
                 .build();
