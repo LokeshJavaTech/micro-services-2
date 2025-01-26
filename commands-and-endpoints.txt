@@ -73,4 +73,15 @@ GET http://localhost:8072/eazybank/cards/api/fetch?mobileNumber=1234567890
 GET http://localhost:8072/actuator/circuitbreakers
 GET http://localhost:8072/actuator/circuitbreakerevents?name=accountsCircuitBreaker
 
+-------------------- Grafana --------------------
+GET http://localhost:3000
+
+-------------------- Keycloak - Authentication Server --------------------
+GET http://localhost:7080
+
+
+
+
+
+
 ----------------------------------------------------------------------------------------------------
