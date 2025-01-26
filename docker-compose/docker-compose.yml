@@ -1,5 +1,18 @@
 services:
 
+  keycloak_service:
+    image: quay.io/keycloak/keycloak:26.1.0
+    container_name: keycloak-container
+    ports:
+      - "7080:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    command: "start-dev"
+    networks:
+      - eazybytes_network
+
+
   redis_service:
     image: redis
     ports:
@@ -60,8 +73,9 @@ services:
   accounts_service:
     image: lokeshjavatech/accounts:v1
     container_name: accounts-container
-    ports:
-      - 8080:8080
+    # Commented the exposed port, so that this micro-service is not directly accessible to outside world and can only be accessed from within eazybytes_network docker network
+    #ports:
+    #  - 8080:8080
     depends_on:
       config_server_service:
         condition: service_healthy
@@ -89,8 +103,9 @@ services:
   loans_service:
     image: lokeshjavatech/loans:v1
     container_name: loans-container
-    ports:
-      - 8090:8090
+    # Commented the exposed port, so that this micro-service is not directly accessible to outside world and can only be accessed from within eazybytes_network docker network
+    #ports:
+    #  - 8090:8090
     depends_on:
       config_server_service:
         condition: service_healthy
@@ -118,8 +133,9 @@ services:
   cards_service:
     image: lokeshjavatech/cards:v1
     container_name: cards-container
-    ports:
-      - 9000:9000
+    # Commented the exposed port, so that this micro-service is not directly accessible to outside world and can only be accessed from within eazybytes_network docker network
+    #ports:
+    #  - 9000:9000
     depends_on:
       config_server_service:
         condition: service_healthy
@@ -167,6 +183,7 @@ services:
       SPRING_DATA_REDIS_HOST: redis_service
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_TIMEOUT: 1s
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak_service:8080/realms/eazybank_clientcredentialsflow_clientid/protocol/openid-connect/certs"
     deploy:
       resources:
         limits:
