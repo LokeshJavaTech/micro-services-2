@@ -79,6 +79,9 @@ GET http://localhost:3000
 -------------------- Keycloak - Authentication Server --------------------
 GET http://localhost:7080
 
+-------------------- Messaging MS --------------------
+POST http://localhost:9010/email
+POST http://localhost:9010/sms
 
 
 
