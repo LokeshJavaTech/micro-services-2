@@ -82,7 +82,7 @@ GET http://localhost:7080
 -------------------- Messaging MS --------------------
 POST http://localhost:9010/email
 POST http://localhost:9010/sms
-
+POST http://localhost:9010/emailsms
 
 
 
