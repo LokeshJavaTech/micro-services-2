@@ -1,5 +1,21 @@
 services:
 
+  rabbitmq_service:
+    image: rabbitmq:4.0-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - eazybytes_network
+
+
   keycloak_service:
     image: quay.io/keycloak/keycloak:26.1.0
     container_name: keycloak-container
@@ -81,6 +97,8 @@ services:
         condition: service_healthy
       eureka_server_service:
         condition: service_healthy
+      rabbitmq_service:
+        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
       start_period: 10s
@@ -92,6 +110,7 @@ services:
       SPRING_PROFILES_ACTIVE: "qa"
       SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server-container:8070/eureka/"
+      SPRING_RABBITMQ_HOST: "rabbitmq_service"
     deploy:
       resources:
         limits:
@@ -188,6 +207,18 @@ services:
       resources:
         limits:
           memory: 700m
+    networks:
+      - eazybytes_network
+
+
+  messaging_service:
+    image: lokeshjavatech/messaging:v1
+    container_name: messaging-container
+    depends_on:
+      rabbitmq_service:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbitmq_service"
     networks:
       - eazybytes_network
 
