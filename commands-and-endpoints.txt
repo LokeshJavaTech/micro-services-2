@@ -1,3 +1,5 @@
+https://github.com/eazybytes/microservices/tree/3.3.2
+
 ################################### Commands to run from micro-services-2 directory ####################################
 
 mvn -f config-server/pom.xml compile jib:dockerBuild
@@ -89,6 +91,9 @@ POST http://localhost:9010/emailsms
 -------------------- RabbitMQ - PubSub Model for Event Driven Microservices --------------------
 UI http://localhost:15672
 
+-------------------- Apache Kafka - Event Streaming for Event Driven Microservices --------------------
+Kafka running on localhost:9092
+No default UI, we can install Kafka plugin "kafkalytic" in intellij to view Brokers, Consumers, Topics
 
 
 ----------------------------------------------------------------------------------------------------

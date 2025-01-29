@@ -1,17 +1,39 @@
 services:
 
-  rabbitmq_service:
-    image: rabbitmq:4.0-management
-    hostname: rabbitmq
+  #rabbitmq_service:
+  #  image: rabbitmq:4.0-management
+  #  hostname: rabbitmq
+  #  ports:
+  #    - "5672:5672"
+  #    - "15672:15672"
+  #  healthcheck:
+  #    test: rabbitmq-diagnostics check_port_connectivity
+  #    interval: 10s
+  #    timeout: 50s
+  #    retries: 10
+  #    start_period: 50s
+  #  networks:
+  #    - eazybytes_network
+
+
+  kafka_service:
+    image: docker.io/bitnami/kafka:3.7
+    container_name: kafka-container
     ports:
-      - "5672:5672"
-      - "15672:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 50s
-      retries: 10
-      start_period: 50s
+      - "9092:9092"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      # KRaft settings
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka_service:9093
+      # Listeners
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
     networks:
       - eazybytes_network
 
@@ -99,8 +121,8 @@ services:
         condition: service_healthy
       eureka_server_service:
         condition: service_healthy
-      rabbitmq_service:
-        condition: service_healthy
+      #rabbitmq_service:
+      #  condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
       start_period: 50s
@@ -112,7 +134,8 @@ services:
       SPRING_PROFILES_ACTIVE: "qa"
       SPRING_CONFIG_IMPORT: "configserver:http://config-server-container:8071/"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server-container:8070/eureka/"
-      SPRING_RABBITMQ_HOST: "rabbitmq_service"
+      #SPRING_RABBITMQ_HOST: "rabbitmq_service"
+      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: "kafka_service:9092"
     deploy:
       resources:
         limits:
@@ -216,13 +239,19 @@ services:
   messaging_service:
     image: lokeshjavatech/messaging:v1
     container_name: messaging-container
-    depends_on:
-      rabbitmq_service:
-        condition: service_healthy
+    #depends_on:
+    #  rabbitmq_service:
+    #    condition: service_healthy
     environment:
-      SPRING_RABBITMQ_HOST: "rabbitmq_service"
+      #SPRING_RABBITMQ_HOST: "rabbitmq_service"
+      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: "kafka_service:9092"
     networks:
       - eazybytes_network
+
+
+volumes:
+  kafka_data:
+    driver: local
 
 
 networks:

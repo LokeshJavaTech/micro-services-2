@@ -53,9 +53,9 @@ public class AccountsServiceImpl  implements IAccountsService {
 
     private void sendMsgToRabbitMQ(Accounts accounts, Customer customer) {
         AccountsMsgDto accountsMsgDto = new AccountsMsgDto(accounts.getAccountNumber(), customer.getName(), customer.getEmail(), customer.getMobileNumber());
-        logger.info("Sending message to RabbitMq: {}", accountsMsgDto);
+        logger.info("Sending message to Kafka: {}", accountsMsgDto);
         boolean result = streamBridge.send(OUTPUT_DESTINATION_BINDING_NAME, accountsMsgDto);
-        logger.info("Message to RabbitMq is sent successfully?: {}", result);
+        logger.info("Message to Kafka is sent successfully?: {}", result);
     }
 
     /**
